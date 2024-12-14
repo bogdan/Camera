@@ -60,10 +60,14 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
               let ciImage = CIImage(data: imageData)
         else { return }
 
+        let metadata = photo.metadata
+
         let capturedCIImage = prepareCIImage(ciImage, parent.attributes.cameraFilters)
-        let capturedCGImage = prepareCGImage(capturedCIImage)
-        let capturedUIImage = prepareUIImage(capturedCGImage)
-        let capturedMedia = MCameraMedia(data: capturedUIImage)
+        guard let capturedCGImage = prepareCGImage(capturedCIImage) else { return }
+
+        guard let outputImageData = embedMetadata(imageData, capturedCGImage, metadata: metadata) else { return }
+
+        let capturedMedia = MCameraMedia(data: outputImageData)
 
         parent.setCapturedMedia(capturedMedia)
     }
@@ -75,13 +79,21 @@ private extension CameraManagerPhotoOutput {
     func prepareCGImage(_ ciImage: CIImage) -> CGImage? {
         CIContext().createCGImage(ciImage, from: ciImage.extent)
     }
-    func prepareUIImage(_ cgImage: CGImage?) -> UIImage? {
-        guard let cgImage else { return nil }
 
-        let frameOrientation = getFixedFrameOrientation()
-        let orientation = UIImage.Orientation(frameOrientation)
-        let uiImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: orientation)
-        return uiImage
+    func embedMetadata(_ originalImageData: Data, _ cgImage: CGImage, metadata: [String: Any]) -> Data? {
+        guard let source = CGImageSourceCreateWithData(originalImageData as CFData, nil),
+              let type = CGImageSourceGetType(source) else { return nil }
+
+        let mutableData = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(mutableData, type, 1, nil) else { return nil }
+
+        // Add the processed CGImage with metadata
+        CGImageDestinationAddImage(destination, cgImage, metadata as CFDictionary)
+
+        // Finalize the destination
+        CGImageDestinationFinalize(destination)
+
+        return mutableData as Data
     }
 }
 private extension CameraManagerPhotoOutput {
