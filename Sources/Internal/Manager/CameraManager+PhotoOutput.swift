@@ -44,6 +44,7 @@ private extension CameraManagerPhotoOutput {
     func getPhotoOutputSettings() -> AVCapturePhotoSettings {
         let settings = AVCapturePhotoSettings()
         settings.flashMode = parent.attributes.flashMode.toDeviceFlashMode()
+        settings.isAutoContentAwareDistortionCorrectionEnabled = true
         return settings
     }
     func configureOutput() {
@@ -60,25 +61,23 @@ class MetadataCustomizer: NSObject, AVCapturePhotoFileDataRepresentationCustomiz
     }
 }
 
-// MARK: Receive Data
 extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
         
-        if parent.attributes.cameraFilters.isEmpty {
-            parent.setCapturedMedia(MCameraMedia(
-                data: UIImage(data: photo.fileDataRepresentation(with: MetadataCustomizer())!)
-            ))
-            return
-        }
         guard let imageData = photo.fileDataRepresentation(),
               let ciImage = CIImage(data: imageData)
         else { return }
 
-        
+        let metadata = photo.metadata
+
         let capturedCIImage = prepareCIImage(ciImage, parent.attributes.cameraFilters)
-        let capturedCGImage = prepareCGImage(capturedCIImage)
+        guard let capturedCGImage = prepareCGImage(capturedCIImage) else { return }
+        
         let capturedUIImage = prepareUIImage(capturedCGImage)
-        let capturedMedia = MCameraMedia(data: capturedUIImage)
+        
+        guard let finalImageData = reembedMetadata(to: capturedUIImage, with: metadata) else { return }
+        
+        let capturedMedia = MCameraMedia(data: finalImageData)
 
         parent.setCapturedMedia(capturedMedia)
     }
@@ -95,8 +94,24 @@ private extension CameraManagerPhotoOutput {
 
         let frameOrientation = getFixedFrameOrientation()
         let orientation = UIImage.Orientation(frameOrientation)
-        let uiImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: orientation)
-        return uiImage
+        return UIImage(cgImage: cgImage, scale: 1.0, orientation: orientation)
+    }
+
+    func reembedMetadata(to image: UIImage?, with metadata: [String: Any]) -> Data? {
+        guard let image = image,
+              let imageData = image.jpegData(compressionQuality: 1.0)
+        else { return nil }
+        
+        guard let source = CGImageSourceCreateWithData(imageData as CFData, nil),
+              let uti = CGImageSourceGetType(source),
+              let destinationData = NSMutableData() as CFMutableData?,
+              let destination = CGImageDestinationCreateWithData(destinationData, uti, 1, nil)
+        else { return nil }
+
+        CGImageDestinationAddImageFromSource(destination, source, 0, metadata as CFDictionary)
+        guard CGImageDestinationFinalize(destination) else { return nil }
+        
+        return destinationData as Data
     }
 }
 private extension CameraManagerPhotoOutput {
