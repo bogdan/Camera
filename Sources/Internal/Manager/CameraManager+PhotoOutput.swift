@@ -10,6 +10,7 @@
 
 
 import AVKit
+import AVFoundation
 
 @MainActor class CameraManagerPhotoOutput: NSObject {
     private(set) var parent: CameraManager!
@@ -53,12 +54,20 @@ private extension CameraManagerPhotoOutput {
     }
 }
 
+class MetadataCustomizer: NSObject, AVCapturePhotoFileDataRepresentationCustomizer {
+    func replacementMetadata(for photo: AVCapturePhoto) -> [String : Any]? {
+        return photo.metadata
+    }
+}
+
 // MARK: Receive Data
 extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
         
         if parent.attributes.cameraFilters.isEmpty {
-            parent.setCapturedMedia(MCameraMedia(data: photo.fileDataRepresentation()))
+            parent.setCapturedMedia(MCameraMedia(
+                data: photo.fileDataRepresentation(with: MetadataCustomizer())
+            ))
         }
         guard let imageData = photo.fileDataRepresentation(),
               let ciImage = CIImage(data: imageData)
