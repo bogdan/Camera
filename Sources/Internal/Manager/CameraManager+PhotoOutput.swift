@@ -77,6 +77,7 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
         guard let finalImageData = reembedMetadata(to: capturedUIImage, with: metadata) else { return }
         
         let capturedMedia = MCameraMedia(data: UIImage(data: finalImageData))
+        print(ImgUtils.extractMetadata(from: imageData))
 
         parent.setCapturedMedia(capturedMedia)
     }
@@ -113,6 +114,29 @@ private extension CameraManagerPhotoOutput {
         return destinationData as Data
     }
 }
+
+
+struct ImgUtils {
+    static func extractMetadata(from image: Data) -> [String: Any] {
+        guard let source = CGImageSourceCreateWithData(
+            image as CFData, nil
+        ) else {
+            print("Failed to create image source.")
+            return [:]
+        }
+        
+        guard let metadata = CGImageSourceCopyPropertiesAtIndex(
+            source, 0, nil
+        ) as? [String: Any] else {
+            print("Failed to copy metadata.")
+            return [:]
+        }
+        
+        return metadata
+        
+    }
+}
+
 private extension CameraManagerPhotoOutput {
     func getFixedFrameOrientation() -> CGImagePropertyOrientation {
         guard UIDevice.current.orientation != parent.attributes.deviceOrientation.toDeviceOrientation() else { return parent.attributes.frameOrientation }
