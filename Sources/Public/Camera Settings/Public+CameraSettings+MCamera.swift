@@ -318,12 +318,13 @@ public extension MCamera {
      ```
      */
     func onImageCaptured(_ action: @escaping (UIImage, MCamera.Controller) -> ()) -> Self {
-        config.imageCapturedAction = {
-            action(UIImage(data: $0)!, $1)
-        }
+        onImageCaptured { action(UIImage(data: $0)!, $1) }
+    }
+    
+    func onImageCaptured(_ action: @escaping (Data, MCamera.Controller) -> ()) -> Self {
+        config.imageCapturedAction = action
         return self
     }
-    func onImageCaptured(_ action: @escaping (Data, MCamera.Controller) -> ()) -> Self { config.imageCapturedAction = action; return self }
     
 
     /**

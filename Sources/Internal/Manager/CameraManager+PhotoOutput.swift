@@ -72,6 +72,12 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
         guard let imageData = photo.fileDataRepresentation(),
               let ciImage = CIImage(data: imageData)
         else { return }
+        
+        if parent.attributes.cameraFilters.isEmpty {
+            let capturedMedia = MCameraMedia(data: imageData)
+            parent.setCapturedMedia(capturedMedia)
+            return
+        }
 
         let metadata = photo.metadata
 
@@ -83,7 +89,6 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
         guard let finalImageData = reembedMetadata(to: capturedUIImage, with: metadata) else { return }
         
         let capturedMedia = MCameraMedia(data: finalImageData)
-        print(ImgUtils.extractMetadata(from: imageData))
 
         parent.setCapturedMedia(capturedMedia)
     }
