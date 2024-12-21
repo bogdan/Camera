@@ -56,10 +56,15 @@ private extension CameraManagerPhotoOutput {
 // MARK: Receive Data
 extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: (any Error)?) {
+        
+        if parent.attributes.cameraFilters.isEmpty {
+            parent.setCapturedMedia(MCameraMedia(data: photo.fileDataRepresentation()))
+        }
         guard let imageData = photo.fileDataRepresentation(),
               let ciImage = CIImage(data: imageData)
         else { return }
 
+        
         let capturedCIImage = prepareCIImage(ciImage, parent.attributes.cameraFilters)
         let capturedCGImage = prepareCGImage(capturedCIImage)
         let capturedUIImage = prepareUIImage(capturedCGImage)
