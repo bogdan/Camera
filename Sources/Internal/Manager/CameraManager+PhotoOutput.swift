@@ -44,7 +44,6 @@ private extension CameraManagerPhotoOutput {
     func getPhotoOutputSettings() -> AVCapturePhotoSettings {
         let settings = AVCapturePhotoSettings()
         settings.flashMode = parent.attributes.flashMode.toDeviceFlashMode()
-        settings.isAutoContentAwareDistortionCorrectionEnabled = true
         return settings
     }
     func configureOutput() {
