@@ -11,6 +11,12 @@
 
 import AVKit
 import AVFoundation
+import CoreGraphics
+import ImageIO
+import UniformTypeIdentifiers
+import CoreServices
+
+
 
 @MainActor class CameraManagerPhotoOutput: NSObject {
     private(set) var parent: CameraManager!
@@ -134,6 +140,34 @@ struct ImgUtils {
         
         return metadata
         
+    }
+    
+    func convertToPNGKeepingMetadata(data: Data) -> Data? {
+        // Create a source from the input data
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
+            return nil
+        }
+        
+        // Get the image metadata
+        let metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as NSDictionary?
+        
+        // Create a mutable data object for the destination
+        let destinationData = NSMutableData()
+        
+        // Create a destination to write the PNG data
+        guard let destination = CGImageDestinationCreateWithData(destinationData as CFMutableData, kUTTypePNG, 1, nil) else {
+            return nil
+        }
+        
+        // Add the image and metadata to the destination
+        CGImageDestinationAddImageFromSource(destination, source, 0, metadata)
+        
+        // Finalize the destination to write the PNG data
+        guard CGImageDestinationFinalize(destination) else {
+            return nil
+        }
+        
+        return destinationData as Data
     }
 }
 
