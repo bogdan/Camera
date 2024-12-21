@@ -16,7 +16,7 @@ public extension MCameraMedia {
     /**
      Gets the image from the media object.
      */
-    func getImage() -> UIImage? { image }
+    func getImage() -> Data? { image }
 
     /**
      Gets the video URL from the media object.

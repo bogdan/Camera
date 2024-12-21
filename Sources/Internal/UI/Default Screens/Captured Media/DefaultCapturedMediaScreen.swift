@@ -49,8 +49,8 @@ private extension DefaultCapturedMediaScreen {
     }
 }
 private extension DefaultCapturedMediaScreen {
-    func createImageView(_ image: UIImage) -> some View {
-        Image(uiImage: image)
+    func createImageView(_ image: Data) -> some View {
+        Image(uiImage: UIImage(data: image)!)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .ignoresSafeArea()

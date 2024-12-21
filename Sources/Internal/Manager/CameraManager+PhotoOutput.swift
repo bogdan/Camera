@@ -82,7 +82,7 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
         
         guard let finalImageData = reembedMetadata(to: capturedUIImage, with: metadata) else { return }
         
-        let capturedMedia = MCameraMedia(data: UIImage(data: finalImageData))
+        let capturedMedia = MCameraMedia(data: finalImageData)
         print(ImgUtils.extractMetadata(from: imageData))
 
         parent.setCapturedMedia(capturedMedia)
