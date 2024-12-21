@@ -66,7 +66,7 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
         
         if parent.attributes.cameraFilters.isEmpty {
             parent.setCapturedMedia(MCameraMedia(
-                data: photo.fileDataRepresentation(with: MetadataCustomizer())
+                data: UIImage(data: photo.fileDataRepresentation(with: MetadataCustomizer())!)
             ))
             return
         }
