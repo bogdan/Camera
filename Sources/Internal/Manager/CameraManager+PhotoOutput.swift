@@ -68,6 +68,7 @@ extension CameraManagerPhotoOutput: @preconcurrency AVCapturePhotoCaptureDelegat
             parent.setCapturedMedia(MCameraMedia(
                 data: photo.fileDataRepresentation(with: MetadataCustomizer())
             ))
+            return
         }
         guard let imageData = photo.fileDataRepresentation(),
               let ciImage = CIImage(data: imageData)
