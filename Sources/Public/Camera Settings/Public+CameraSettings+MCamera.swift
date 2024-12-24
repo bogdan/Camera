@@ -326,6 +326,10 @@ public extension MCamera {
         return self
     }
     
+    func setAVPhotoCaptureSettings(_ settings: AVCapturePhotoSettings) {
+        manager.attributes.capturePhotoSettings = settings
+    }
+    
 
     /**
      Defines action that is called when a video is captured.
