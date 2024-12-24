@@ -331,6 +331,11 @@ public extension MCamera {
         return self
     }
     
+    func configureOutput(_ action: @escaping (AVCapturePhotoOutput) -> ()) -> Self {
+        manager.attributes.configureOutput = action
+        return self
+    }
+    
 
     /**
      Defines action that is called when a video is captured.
