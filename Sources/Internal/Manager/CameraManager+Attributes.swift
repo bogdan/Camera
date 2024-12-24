@@ -28,7 +28,7 @@ struct CameraManagerAttributes {
     var cameraFilters: [CIFilter] = []
     var mirrorOutput: Bool = false
     var isGridVisible: Bool = true
-    var capturePhotoSettings: AVCapturePhotoSettings? = nil
+    var capturePhotoSettings: (() -> AVCapturePhotoSettings)? = nil
     var configureOutput: ((AVCapturePhotoOutput) -> ())? = nil
     var deviceOrientation: AVCaptureVideoOrientation = .portrait
     var frameOrientation: CGImagePropertyOrientation = .right

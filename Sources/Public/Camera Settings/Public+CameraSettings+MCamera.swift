@@ -326,7 +326,7 @@ public extension MCamera {
         return self
     }
     
-    func setAVPhotoCaptureSettings(_ settings: AVCapturePhotoSettings) -> Self {
+    func setAVPhotoCaptureSettings(_ settings: @escaping () -> AVCapturePhotoSettings) -> Self {
         manager.attributes.capturePhotoSettings = settings
         return self
     }
