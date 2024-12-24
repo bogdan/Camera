@@ -48,6 +48,9 @@ extension CameraManagerPhotoOutput {
 }
 private extension CameraManagerPhotoOutput {
     func getPhotoOutputSettings() -> AVCapturePhotoSettings {
+        if let settings = parent.attributes.capturePhotoSettings {
+            return AVCapturePhotoSettings(from: settings)
+        }
         let settings = AVCapturePhotoSettings()
         settings.flashMode = parent.attributes.flashMode.toDeviceFlashMode()
         return settings

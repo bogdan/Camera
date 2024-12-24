@@ -269,6 +269,12 @@ extension CameraManager {
     }
 }
 
+extension CameraManager {
+    func setAVPhotoSettings(_ settings: AVCapturePhotoSettings) {
+        attributes.capturePhotoSettings = settings
+    }
+}
+
 // MARK: Set Camera Filters
 extension CameraManager {
     func setCameraFilters(_ cameraFilters: [CIFilter]) {
