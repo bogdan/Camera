@@ -48,11 +48,10 @@ extension CameraManagerPhotoOutput {
 }
 private extension CameraManagerPhotoOutput {
     func getPhotoOutputSettings() -> AVCapturePhotoSettings {
-        if let settings = parent.attributes.capturePhotoSettings {
-            return AVCapturePhotoSettings(from: settings())
-        }
-        let settings = AVCapturePhotoSettings()
-        settings.flashMode = parent.attributes.flashMode.toDeviceFlashMode()
+        let settings = parent.attributes.capturePhotoSettings?() ?? AVCapturePhotoSettings()
+        let flashMode = parent.attributes.flashMode.toDeviceFlashMode()
+        
+        settings.flashMode = output.supportedFlashModes.contains(flashMode) ? flashMode : output.supportedFlashModes[0]
         return settings
     }
     func configureOutput() {
@@ -61,12 +60,6 @@ private extension CameraManagerPhotoOutput {
         connection.isVideoMirrored = parent.attributes.mirrorOutput ? parent.attributes.cameraPosition != .front : parent.attributes.cameraPosition == .front
         connection.videoOrientation = parent.attributes.deviceOrientation
         parent.attributes.configureOutput?(output)
-    }
-}
-
-class MetadataCustomizer: NSObject, AVCapturePhotoFileDataRepresentationCustomizer {
-    func replacementMetadata(for photo: AVCapturePhoto) -> [String : Any]? {
-        return photo.metadata
     }
 }
 
@@ -125,56 +118,6 @@ private extension CameraManagerPhotoOutput {
 
         CGImageDestinationAddImageFromSource(destination, source, 0, metadata as CFDictionary)
         guard CGImageDestinationFinalize(destination) else { return nil }
-        
-        return destinationData as Data
-    }
-}
-
-
-struct ImgUtils {
-    static func extractMetadata(from image: Data) -> [String: Any] {
-        guard let source = CGImageSourceCreateWithData(
-            image as CFData, nil
-        ) else {
-            print("Failed to create image source.")
-            return [:]
-        }
-        
-        guard let metadata = CGImageSourceCopyPropertiesAtIndex(
-            source, 0, nil
-        ) as? [String: Any] else {
-            print("Failed to copy metadata.")
-            return [:]
-        }
-        
-        return metadata
-        
-    }
-    
-    func convertToPNGKeepingMetadata(data: Data) -> Data? {
-        // Create a source from the input data
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return nil
-        }
-        
-        // Get the image metadata
-        let metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as NSDictionary?
-        
-        // Create a mutable data object for the destination
-        let destinationData = NSMutableData()
-        
-        // Create a destination to write the PNG data
-        guard let destination = CGImageDestinationCreateWithData(destinationData as CFMutableData, kUTTypePNG, 1, nil) else {
-            return nil
-        }
-        
-        // Add the image and metadata to the destination
-        CGImageDestinationAddImageFromSource(destination, source, 0, metadata)
-        
-        // Finalize the destination to write the PNG data
-        guard CGImageDestinationFinalize(destination) else {
-            return nil
-        }
         
         return destinationData as Data
     }
