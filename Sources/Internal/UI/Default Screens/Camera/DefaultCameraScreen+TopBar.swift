@@ -15,8 +15,9 @@ extension DefaultCameraScreen { struct TopBar: View {
     let parent: DefaultCameraScreen
 
 
-    var body: some View { if isTopBarActive {
+    var body: some View { if true {
         ZStack {
+            Text("Hello").foregroundColor(.red)
             createCloseButton()
             createCentralView()
             createRightSideView()
