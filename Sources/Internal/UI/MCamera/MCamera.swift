@@ -154,7 +154,7 @@ private extension MCamera {
 }
 
 // MARK: Camera Screen
-private extension MCamera {
+extension MCamera {
     func onCameraAppear() { Task {
         do {
             try await manager.setup()
