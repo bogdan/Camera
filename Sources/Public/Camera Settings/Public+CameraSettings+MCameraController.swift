@@ -23,5 +23,8 @@ public extension MCamera.Controller {
     /**
      Opens the Camera Screen.
      */
-    func reopenCameraScreen() { mCamera.manager.setCapturedMedia(nil) }
+    func reopenCameraScreen() {
+        mCamera.manager.setCapturedMedia(nil)
+        mCamera.manager.cancel()
+    }
 }
