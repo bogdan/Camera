@@ -127,7 +127,7 @@ private extension CameraManager {
 // MARK: Cancel
 extension CameraManager {
     func cancel() {
-        captureSession = captureSession.stopRunningAndReturnNewInstance()
+        captureSession.startRunning()
         motionManager.reset()
         videoOutput.reset()
         notificationCenterManager.reset()
