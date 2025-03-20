@@ -15,7 +15,7 @@ extension DefaultCameraScreen { struct TopBar: View {
     let parent: DefaultCameraScreen
 
 
-    var body: some View { if isTopBarActive {
+    var body: some View {
         ZStack {
             createCloseButton()
             createCentralView()
@@ -27,7 +27,7 @@ extension DefaultCameraScreen { struct TopBar: View {
         .padding(.horizontal, 20)
         .background(Color(.mijickBackgroundPrimary80))
         .transition(.move(edge: .top))
-    }}
+    }
 }}
 private extension DefaultCameraScreen.TopBar {
     @ViewBuilder func createCloseButton() -> some View { if isCloseButtonActive {
