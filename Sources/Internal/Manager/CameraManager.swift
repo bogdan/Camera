@@ -72,7 +72,7 @@ private extension CameraManager {
         captureSession.sessionPreset = attributes.resolution
 
         cameraLayer.session = captureSession as? AVCaptureSession
-        cameraLayer.videoGravity = .resizeAspectFill
+        cameraLayer.videoGravity = .resizeAspect
         cameraLayer.isHidden = true
         cameraView.layer.addSublayer(cameraLayer)
     }
@@ -92,12 +92,18 @@ private extension CameraManager {
     }
     func startSession() { Task {
         guard let device = getCameraInput()?.device else { return }
-
+        
         try await startCaptureSession()
         try setupDevice(device)
         resetAttributes(device: device)
         cameraMetalView.performCameraEntranceAnimation()
     }}
+        
+        
+        
+        
+        
+        
 }
 private extension CameraManager {
     func getAudioInput() -> (any CaptureDeviceInput)? {

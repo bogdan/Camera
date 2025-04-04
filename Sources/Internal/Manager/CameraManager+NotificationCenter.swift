@@ -21,16 +21,10 @@ extension CameraManagerNotificationCenter {
     func setup(parent: CameraManager) {
         self.parent = parent
         NotificationCenter.default.addObserver(self, selector: #selector(handleSessionWasInterrupted), name: .AVCaptureSessionWasInterrupted, object: parent.captureSession)
-//        NotificationCenter.default.addObserver(self, selector: #selector(pauseSession), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resumeSession), name: UIApplication.willEnterForegroundNotification, object: nil)
 
     }
     
-    
-//    @objc private func pauseSession() {
-//        parent.captureSession.stopRunning() 
-//    }
-
     @objc private func resumeSession() {
         let session = parent.captureSession
         DispatchQueue.global(qos: .userInitiated).async {
