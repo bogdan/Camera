@@ -10,6 +10,7 @@
 
 
 import SwiftUI
+import AVFoundation
 
 public struct DefaultCameraScreen: MCameraScreen {
     @ObservedObject public var cameraManager: CameraManager
@@ -19,9 +20,12 @@ public struct DefaultCameraScreen: MCameraScreen {
 
 
     public var body: some View {
-        ZStack {
-            createContentView()
+        VStack {
             createTopBar()
+            Spacer()
+            createContentView()
+                .border(.pink)
+            Spacer()
             createBottomBar()
         }
         .ignoresSafeArea()
@@ -34,7 +38,7 @@ public struct DefaultCameraScreen: MCameraScreen {
 private extension DefaultCameraScreen {
     func createTopBar() -> some View {
         DefaultCameraScreen.TopBar(parent: self)
-            .frame(maxHeight: .infinity, alignment: .top)
+            .frame(alignment: .top)
     }
     func createContentView() -> some View {
         createCameraOutputView()
@@ -42,7 +46,7 @@ private extension DefaultCameraScreen {
     }
     func createBottomBar() -> some View {
         DefaultCameraScreen.BottomBar(parent: self)
-            .frame(maxHeight: .infinity, alignment: .bottom)
+            .frame(alignment: .bottom)
     }
 }
 
@@ -51,4 +55,11 @@ extension DefaultCameraScreen {
         case true: deviceOrientation.getAngle()
         case false: .zero
     }}
+}
+
+#Preview("Main") {
+    DefaultCameraScreen(
+        cameraManager: .init(
+            captureSession: AVCaptureSession(), captureDeviceInputType: AVCaptureDeviceInput.self), namespace: Namespace().wrappedValue, closeMCameraAction: { }
+    )
 }
