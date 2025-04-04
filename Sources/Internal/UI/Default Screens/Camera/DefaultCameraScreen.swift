@@ -24,6 +24,7 @@ public struct DefaultCameraScreen: MCameraScreen {
             createTopBar()
             Spacer()
             createContentView()
+                .aspectRatio(3.0 / 4.0, contentMode: .fit)
                 .border(.pink)
             Spacer()
             createBottomBar()

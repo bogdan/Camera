@@ -72,7 +72,7 @@ private extension CameraManager {
         captureSession.sessionPreset = attributes.resolution
 
         cameraLayer.session = captureSession as? AVCaptureSession
-        cameraLayer.videoGravity = .resize
+        cameraLayer.videoGravity = .resizeAspect
         cameraLayer.isHidden = true
         cameraLayer.frame = cameraView.bounds
         cameraView.layer.addSublayer(cameraLayer)
