@@ -72,9 +72,9 @@ private extension CameraManager {
         captureSession.sessionPreset = attributes.resolution
 
         cameraLayer.session = captureSession as? AVCaptureSession
-        cameraLayer.videoGravity = .resizeAspect
+        cameraLayer.videoGravity = .resizeAspectFill
         cameraLayer.isHidden = true
-        cameraLayer.frame = cameraView.bounds
+//        cameraLayer.frame = cameraView.bounds
         cameraView.layer.addSublayer(cameraLayer)
     }
     func setupDeviceInputs() throws(MCameraError) {
@@ -135,7 +135,6 @@ private extension CameraManager {
 extension CameraManager {
     func cancel() {
         captureSession = captureSession.stopRunningAndReturnNewInstance()
-//        Task { await captureSession.startRunning() }
         motionManager.reset()
         videoOutput.reset()
         notificationCenterManager.reset()
