@@ -47,11 +47,6 @@ import AVKit
 extension CameraManager {
     func initialize(in view: UIView) {
         cameraView = view
-        cameraView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            cameraView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            cameraView.heightAnchor.constraint(equalTo: cameraView.widthAnchor, multiplier: 4.0 / 3.0) // 4:3 aspect
-        ])
     }
 }
 
@@ -79,6 +74,7 @@ private extension CameraManager {
         cameraLayer.session = captureSession as? AVCaptureSession
         cameraLayer.videoGravity = .resizeAspect
         cameraLayer.isHidden = true
+        cameraLayer.frame = cameraView.bounds
         cameraView.layer.addSublayer(cameraLayer)
     }
     func setupDeviceInputs() throws(MCameraError) {
