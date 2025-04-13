@@ -43,6 +43,7 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var activeVideoMaxFrameDuration: CMTime = .init()
     var exposureMode: AVCaptureDevice.ExposureMode = .continuousAutoExposure
     var hdrMode: CameraHDRMode = .auto
+    var whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode = .continuousAutoWhiteBalance
 
     // MARK: Methods
     func lockForConfiguration() throws { return }
@@ -54,6 +55,9 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     }
     func setExposureTargetBias(_ bias: Float, completionHandler handler: ((CMTime) -> ())?) {
         _exposureTargetBias = bias
+    }
+    func isWhiteBalanceModeSupported(_ value: AVCaptureDevice.WhiteBalanceMode) -> Bool {
+        true
     }
 
     // MARK: Private Attributes
