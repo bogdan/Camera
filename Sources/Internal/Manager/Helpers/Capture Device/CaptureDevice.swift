@@ -43,7 +43,6 @@ protocol CaptureDevice: NSObject {
     var activeVideoMaxFrameDuration: CMTime { get set }
     var exposureMode: AVCaptureDevice.ExposureMode { get set }
     var hdrMode: CameraHDRMode { get set }
-    var whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode {get set}
 
     // MARK: Methods
     func lockForConfiguration() throws
@@ -51,8 +50,6 @@ protocol CaptureDevice: NSObject {
     func isExposureModeSupported(_ exposureMode: AVCaptureDevice.ExposureMode) -> Bool
     func setExposureModeCustom(duration: CMTime, iso: Float, completionHandler: ((CMTime) -> Void)?)
     func setExposureTargetBias(_ bias: Float, completionHandler handler: ((CMTime) -> ())?)
-    func isWhiteBalanceModeSupported(_ value: AVCaptureDevice.WhiteBalanceMode) -> Bool
-
 }
 
 

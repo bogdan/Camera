@@ -127,9 +127,6 @@ private extension CameraManager {
         device.setZoomFactor(attributes.zoomFactor)
         device.setLightMode(attributes.lightMode)
         device.hdrMode = attributes.hdrMode
-        if device.isWhiteBalanceModeSupported(.continuousAutoWhiteBalance) {
-            device.whiteBalanceMode = .continuousAutoWhiteBalance
-        }
         device.unlockForConfiguration()
     }
 }
