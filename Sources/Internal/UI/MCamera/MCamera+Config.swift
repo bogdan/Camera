@@ -13,9 +13,20 @@ import SwiftUI
 
 extension MCamera { @MainActor class Config {
     // MARK: Screens
-    var cameraScreen: CameraScreenBuilder = DefaultCameraScreen.init
-    var capturedMediaScreen: CapturedMediaScreenBuilder? = DefaultCapturedMediaScreen.init
-    var errorScreen: ErrorScreenBuilder = DefaultCameraErrorScreen.init
+    var cameraScreen: CameraScreenBuilder = { manager, id, dismiss in
+        DefaultCameraScreen(cameraManager: manager, namespace: id, closeMCameraAction: dismiss)
+    }
+    var capturedMediaScreen: CapturedMediaScreenBuilder? = { media, namespace, retakeAction, acceptMediaAction in
+        DefaultCapturedMediaScreen(
+            capturedMedia: media,
+            namespace: namespace,
+            retakeAction: retakeAction,
+            acceptMediaAction: acceptMediaAction
+        )
+    }
+    var errorScreen: ErrorScreenBuilder = { error, action in
+        DefaultCameraErrorScreen(error: error, closeMCameraAction: action)
+    }
 
     // MARK: Actions
     var imageCapturedAction: (Data, MCamera.Controller) -> () = { _,_ in }
