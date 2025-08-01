@@ -13,7 +13,7 @@ import Foundation
 import UIKit
 
 @MainActor class CameraManagerNotificationCenter {
-    private(set) var parent: CameraManager!
+    private(set) weak var parent: CameraManager?
 }
 
 // MARK: Setup
@@ -26,7 +26,9 @@ extension CameraManagerNotificationCenter {
     }
     
     @objc private func resumeSession() {
-        let session = parent.captureSession
+        guard let session = parent?.captureSession else {
+            return
+        }
         DispatchQueue.global(qos: .userInitiated).async {
             if !session.isRunning {
                 session.startRunning() // Restart session when app enters foreground
@@ -36,6 +38,8 @@ extension CameraManagerNotificationCenter {
 }
 private extension CameraManagerNotificationCenter {
     @objc func handleSessionWasInterrupted() {
+        guard let parent else { return }
+
         parent.attributes.lightMode = .off
         parent.videoOutput.reset()
     }
