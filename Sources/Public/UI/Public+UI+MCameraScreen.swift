@@ -222,6 +222,17 @@ public extension MCameraScreen {
     var cameraFilters: [CIFilter] { cameraManager.attributes.cameraFilters }
     var isOutputMirrored: Bool { cameraManager.attributes.mirrorOutput }
     var isGridVisible: Bool { cameraManager.attributes.isGridVisible }
+
+    var minAvailableVideoZoomFactor: CGFloat { cameraManager.getCameraInput()?.device.minAvailableVideoZoomFactor ?? 1 }
+    var maxAvailableVideoZoomFactor: CGFloat { cameraManager.getCameraInput()?.device.maxAvailableVideoZoomFactor ?? 1 }
+    var minExposureDuration: CMTime { cameraManager.getCameraInput()?.device.minExposureDuration ?? .zero }
+    var maxExposureDuration: CMTime { cameraManager.getCameraInput()?.device.maxExposureDuration ?? .zero }
+    var minISO: Float { cameraManager.getCameraInput()?.device.minISO ?? 0 }
+    var maxISO: Float { cameraManager.getCameraInput()?.device.maxISO ?? 0 }
+    var minExposureTargetBias: Float { cameraManager.getCameraInput()?.device.minExposureTargetBias ?? 0 }
+    var maxExposureTargetBias: Float { cameraManager.getCameraInput()?.device.maxExposureTargetBias ?? 0 }
+    var minFrameRate: Float64? { cameraManager.getCameraInput()?.device.minFrameRate }
+    var maxFrameRate: Float64? { cameraManager.getCameraInput()?.device.maxFrameRate }
 }
 public extension MCameraScreen {
     var hasFlash: Bool { cameraManager.hasFlash }
