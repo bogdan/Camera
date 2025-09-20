@@ -42,7 +42,19 @@ extension CameraManagerPhotoOutput {
         let settings = getPhotoOutputSettings()
 
         configureOutput()
-        output.capturePhoto(with: settings, delegate: self)
+
+        if !(parent?.captureSession.isRunning ?? true)  {
+            parent?.captureSession.startRunning() // Restart session when app enters foreground
+        }
+
+        if let connection = output.connection(with: .video) {
+            if !connection.isEnabled {
+                connection.isEnabled = true
+            }
+            if connection.isActive {
+                output.capturePhoto(with: settings, delegate: self)
+            }
+        }
         parent?.cameraMetalView.performImageCaptureAnimation()
     }
 }
