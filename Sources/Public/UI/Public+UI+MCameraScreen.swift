@@ -233,6 +233,9 @@ public extension MCameraScreen {
     var maxExposureTargetBias: Float { cameraManager.getCameraInput()?.device.maxExposureTargetBias ?? 0 }
     var minFrameRate: Float64? { cameraManager.getCameraInput()?.device.minFrameRate }
     var maxFrameRate: Float64? { cameraManager.getCameraInput()?.device.maxFrameRate }
+    var isAdjustingExposure: Bool { cameraManager.getCameraInput()?.device.isAdjustingExposure ?? false }
+    var isAdjustingFocus: Bool { cameraManager.getCameraInput()?.device.isAdjustingFocus ?? false }
+    var isAdjustingWhiteBalance: Bool { cameraManager.getCameraInput()?.device.isAdjustingWhiteBalance ?? false }
 }
 public extension MCameraScreen {
     var hasFlash: Bool { cameraManager.hasFlash }

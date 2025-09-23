@@ -32,6 +32,9 @@ protocol CaptureDevice: NSObject {
     var isExposurePointOfInterestSupported: Bool { get }
     var isFocusPointOfInterestSupported: Bool { get }
     var isVideoHDRSupported: Bool { get }
+    var isAdjustingExposure: Bool { get }
+    var isAdjustingFocus: Bool { get }
+    var isAdjustingWhiteBalance: Bool { get }
 
     // MARK: Getters & Setters
     var videoZoomFactor: CGFloat { get set }

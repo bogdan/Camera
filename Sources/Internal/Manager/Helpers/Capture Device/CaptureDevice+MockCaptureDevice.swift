@@ -32,6 +32,9 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var isExposurePointOfInterestSupported: Bool { true }
     var isFocusPointOfInterestSupported: Bool { true }
     var isVideoHDRSupported: Bool { true }
+    var isAdjustingExposure: Bool { false }
+    var isAdjustingFocus: Bool { false }
+    var isAdjustingWhiteBalance: Bool { false }
 
     // MARK: Setters
     var videoZoomFactor: CGFloat = 1
