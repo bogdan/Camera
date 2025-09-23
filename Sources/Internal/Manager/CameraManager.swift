@@ -232,6 +232,7 @@ private extension CameraManager {
         device.setFocusPointOfInterest(focusPoint)
         device.setExposurePointOfInterest(focusPoint)
         device.unlockForConfiguration()
+        attributes.cameraExposure.mode = .autoExpose
     }
 }
 
