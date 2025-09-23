@@ -286,68 +286,68 @@ extension CameraManager {
 
 // MARK: Set Exposure Mode
 extension CameraManager {
-    func setExposureMode(_ exposureMode: AVCaptureDevice.ExposureMode) throws {
+    func setExposureMode(_ exposureMode: AVCaptureDevice.ExposureMode, completionHandler: ((CMTime) -> Void)? = nil) throws {
         guard let device = getCameraInput()?.device, exposureMode != attributes.cameraExposure.mode, !isChanging else { return }
 
-        try setDeviceExposureMode(exposureMode, device)
+        try setDeviceExposureMode(exposureMode, device, completionHandler: completionHandler)
         attributes.cameraExposure.mode = device.exposureMode
     }
 }
 private extension CameraManager {
-    func setDeviceExposureMode(_ exposureMode: AVCaptureDevice.ExposureMode, _ device: any CaptureDevice) throws {
+    func setDeviceExposureMode(_ exposureMode: AVCaptureDevice.ExposureMode, _ device: any CaptureDevice, completionHandler: ((CMTime) -> Void)? = nil) throws {
         try device.lockForConfiguration()
-        device.setExposureMode(exposureMode, duration: attributes.cameraExposure.duration, iso: attributes.cameraExposure.iso)
+        device.setExposureMode(exposureMode, duration: attributes.cameraExposure.duration, iso: attributes.cameraExposure.iso, completionHandler: completionHandler)
         device.unlockForConfiguration()
     }
 }
 
 // MARK: Set Exposure Duration
 extension CameraManager {
-    func setExposureDuration(_ exposureDuration: CMTime) throws {
+    func setExposureDuration(_ exposureDuration: CMTime, completionHandler: ((CMTime) -> Void)? = nil) throws {
         guard let device = getCameraInput()?.device, exposureDuration != attributes.cameraExposure.duration, !isChanging else { return }
 
-        try setDeviceExposureDuration(exposureDuration, device)
+        try setDeviceExposureDuration(exposureDuration, device, completionHandler: completionHandler)
         attributes.cameraExposure.duration = device.exposureDuration
     }
 }
 private extension CameraManager {
-    func setDeviceExposureDuration(_ exposureDuration: CMTime, _ device: any CaptureDevice) throws {
+    func setDeviceExposureDuration(_ exposureDuration: CMTime, _ device: any CaptureDevice, completionHandler: ((CMTime) -> Void)? = nil) throws {
         try device.lockForConfiguration()
-        device.setExposureMode(.custom, duration: exposureDuration, iso: attributes.cameraExposure.iso)
+        device.setExposureMode(.custom, duration: exposureDuration, iso: attributes.cameraExposure.iso, completionHandler: completionHandler)
         device.unlockForConfiguration()
     }
 }
 
 // MARK: Set ISO
 extension CameraManager {
-    func setISO(_ iso: Float) throws {
+    func setISO(_ iso: Float, completionHandler: DeviceCompletionHandler? = nil) throws {
         guard let device = getCameraInput()?.device, iso != attributes.cameraExposure.iso, !isChanging else { return }
 
-        try setDeviceISO(iso, device)
+        try setDeviceISO(iso, device, completionHandler: completionHandler)
         attributes.cameraExposure.iso = device.iso
     }
 }
 private extension CameraManager {
-    func setDeviceISO(_ iso: Float, _ device: any CaptureDevice) throws {
+    func setDeviceISO(_ iso: Float, _ device: any CaptureDevice, completionHandler: ((CMTime) -> Void)? = nil) throws {
         try device.lockForConfiguration()
-        device.setExposureMode(.custom, duration: attributes.cameraExposure.duration, iso: iso)
+        device.setExposureMode(.custom, duration: attributes.cameraExposure.duration, iso: iso, completionHandler: completionHandler)
         device.unlockForConfiguration()
     }
 }
 
 // MARK: Set Exposure Target Bias
 extension CameraManager {
-    func setExposureTargetBias(_ exposureTargetBias: Float) throws {
+    func setExposureTargetBias(_ exposureTargetBias: Float, completionHandler: DeviceCompletionHandler? = nil) throws {
         guard let device = getCameraInput()?.device, exposureTargetBias != attributes.cameraExposure.targetBias, !isChanging else { return }
 
-        try setDeviceExposureTargetBias(exposureTargetBias, device)
+        try setDeviceExposureTargetBias(exposureTargetBias, device, completionHandler: completionHandler)
         attributes.cameraExposure.targetBias = device.exposureTargetBias
     }
 }
 private extension CameraManager {
-    func setDeviceExposureTargetBias(_ exposureTargetBias: Float, _ device: any CaptureDevice) throws {
+    func setDeviceExposureTargetBias(_ exposureTargetBias: Float, _ device: any CaptureDevice, completionHandler: DeviceCompletionHandler? = nil) throws {
         try device.lockForConfiguration()
-        device.setExposureTargetBias(exposureTargetBias)
+        device.setExposureTargetBias(exposureTargetBias, completionHandler: completionHandler)
         device.unlockForConfiguration()
     }
 }

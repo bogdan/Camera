@@ -10,7 +10,10 @@
 
 
 import SwiftUI
+import AVFoundation
 
 public typealias CameraScreenBuilder = @MainActor (CameraManager, Namespace.ID, _ closeMCameraAction: @escaping () -> ()) -> any MCameraScreen
 public typealias CapturedMediaScreenBuilder = @MainActor (MCameraMedia, Namespace.ID, _ retakeAction: @escaping () -> (), _ acceptMediaAction: @escaping () -> ()) -> any MCapturedMediaScreen
 public typealias ErrorScreenBuilder = @MainActor (MCameraError, _ closeMCameraAction: @escaping () -> ()) -> any MCameraErrorScreen
+
+public typealias DeviceCompletionHandler = (CMTime) -> Void
