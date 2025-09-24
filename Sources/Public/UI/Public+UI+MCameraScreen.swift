@@ -222,6 +222,8 @@ public extension MCameraScreen {
     var cameraFilters: [CIFilter] { cameraManager.attributes.cameraFilters }
     var isOutputMirrored: Bool { cameraManager.attributes.mirrorOutput }
     var isGridVisible: Bool { cameraManager.attributes.isGridVisible }
+    
+    var device: CaptureDevice? { cameraManager.getCameraInput()?.device }
 
     var minAvailableVideoZoomFactor: CGFloat { cameraManager.getCameraInput()?.device.minAvailableVideoZoomFactor ?? 1 }
     var maxAvailableVideoZoomFactor: CGFloat { cameraManager.getCameraInput()?.device.maxAvailableVideoZoomFactor ?? 1 }
