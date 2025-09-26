@@ -34,6 +34,15 @@ import AVKit
     private(set) var permissionsManager: CameraManagerPermissionsManager = .init()
     private(set) var motionManager: CameraManagerMotionManager = .init()
     private(set) var notificationCenterManager: CameraManagerNotificationCenter = .init()
+    
+    public var frontCameraDevice: CaptureDevice? {
+        frontCameraInput?.device
+    }
+    
+    public var backCameraDevice: CaptureDevice? {
+        backCameraInput?.device
+    }
+
 
     // MARK: Initializer
     init<CS: CaptureSession, CDI: CaptureDeviceInput>(captureSession: CS, captureDeviceInputType: CDI.Type) {
@@ -432,4 +441,6 @@ extension CameraManager {
         case .front: frontCameraInput
         case .back: backCameraInput
     }}
+    
+
 }
