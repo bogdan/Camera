@@ -38,10 +38,11 @@ extension CameraManagerPhotoOutput {
 
 // MARK: Capture
 extension CameraManagerPhotoOutput {
-    func capture(settings: AVCapturePhotoSettings? = nil) {
-        let settings = settings ?? getPhotoOutputSettings()
+    func capture(callback: (AVCapturePhotoSettings) -> Void = { _ in }) {
+        let settings = getPhotoOutputSettings()
 
         configureOutput()
+        callback(settings)
 
         if !(parent?.captureSession.isRunning ?? true)  {
             parent?.captureSession.startRunning() // Restart session when app enters foreground

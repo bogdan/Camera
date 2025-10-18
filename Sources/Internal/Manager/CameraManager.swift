@@ -157,11 +157,11 @@ extension CameraManager {
 
 // MARK: Capture Output
 extension CameraManager {
-    func captureOutput(settings: AVCapturePhotoSettings? = nil) {
+    func captureOutput(callback: (AVCapturePhotoSettings) -> Void) {
         guard !isChanging else { return }
 
         switch attributes.outputType {
-        case .photo: photoOutput.capture(settings: settings)
+        case .photo: photoOutput.capture(callback: callback)
             case .video: videoOutput.toggleRecording()
         }
     }
