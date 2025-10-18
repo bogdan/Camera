@@ -54,7 +54,7 @@ private extension DefaultCameraScreen.BottomBar {
         DefaultCameraScreen.CaptureButton(
             outputType: parent.cameraOutputType,
             isRecording: parent.isRecording,
-            action: parent.captureOutput
+            action: { parent.captureOutput() }
         )
         .transition(.scale)
     }}

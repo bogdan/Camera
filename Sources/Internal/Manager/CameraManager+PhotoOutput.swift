@@ -38,8 +38,8 @@ extension CameraManagerPhotoOutput {
 
 // MARK: Capture
 extension CameraManagerPhotoOutput {
-    func capture() {
-        let settings = getPhotoOutputSettings()
+    func capture(settings: AVCapturePhotoSettings? = nil) {
+        let settings = settings ?? getPhotoOutputSettings()
 
         configureOutput()
 
