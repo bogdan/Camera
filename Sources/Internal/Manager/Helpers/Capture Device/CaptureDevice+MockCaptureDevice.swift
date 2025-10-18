@@ -35,6 +35,7 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var isAdjustingExposure: Bool { false }
     var isAdjustingFocus: Bool { false }
     var isAdjustingWhiteBalance: Bool { false }
+    var position: AVCaptureDevice.Position { .back }
 
     // MARK: Setters
     var videoZoomFactor: CGFloat = 1

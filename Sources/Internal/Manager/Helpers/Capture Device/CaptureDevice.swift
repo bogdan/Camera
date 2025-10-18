@@ -35,6 +35,7 @@ public protocol CaptureDevice: NSObject {
     var isAdjustingExposure: Bool { get }
     var isAdjustingFocus: Bool { get }
     var isAdjustingWhiteBalance: Bool { get }
+    var position: AVCaptureDevice.Position { get }
 
     // MARK: Getters & Setters
     var videoZoomFactor: CGFloat { get set }
