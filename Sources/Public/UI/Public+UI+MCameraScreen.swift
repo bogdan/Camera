@@ -94,7 +94,7 @@ public extension MCameraScreen {
 
      The output type depends on what ``cameraOutputType`` is set to.
      */
-    func captureOutput(callback: (AVCapturePhotoSettings) -> Void = { _ in }) { cameraManager.captureOutput(callback: callback) }
+    func captureOutput(callback: CaptureOutputCallback = { _, _ in }) { cameraManager.captureOutput(callback: callback) }
 
     /**
      Set the output type of the camera.

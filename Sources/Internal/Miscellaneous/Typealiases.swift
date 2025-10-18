@@ -17,3 +17,5 @@ public typealias CapturedMediaScreenBuilder = @MainActor (MCameraMedia, Namespac
 public typealias ErrorScreenBuilder = @MainActor (MCameraError, _ closeMCameraAction: @escaping () -> ()) -> any MCameraErrorScreen
 
 public typealias DeviceCompletionHandler = (CMTime) -> Void
+
+public typealias CaptureOutputCallback = (AVCapturePhotoSettings, AVCapturePhotoOutput) -> Void
