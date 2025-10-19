@@ -12,6 +12,21 @@
 import AVKit
 
 class MockCaptureDevice: NSObject, CaptureDevice {
+    func isWhiteBalanceModeSupported(_ whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode) -> Bool {
+        true
+    }
+    
+    func setWhiteBalanceModeLocked(with gains: AVCaptureDevice.WhiteBalanceGains, completionHandler: DeviceCompletionHandler?) {
+    }
+    
+    func deviceWhiteBalanceGains(for values: AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) -> AVCaptureDevice.WhiteBalanceGains {
+        .init()
+    }
+    
+    func temperatureAndTintValues(for whiteBalanceGains: AVCaptureDevice.WhiteBalanceGains) -> AVCaptureDevice.WhiteBalanceTemperatureAndTintValues {
+        .init()
+    }
+    
     // MARK: Getters
     var uniqueID: String = UUID().uuidString
     var exposureDuration: CMTime { _exposureDuration }

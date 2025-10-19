@@ -54,6 +54,12 @@ public protocol CaptureDevice: NSObject {
     func isExposureModeSupported(_ exposureMode: AVCaptureDevice.ExposureMode) -> Bool
     func setExposureModeCustom(duration: CMTime, iso: Float, completionHandler: DeviceCompletionHandler?)
     func setExposureTargetBias(_ bias: Float, completionHandler: DeviceCompletionHandler?)
+    
+    func isWhiteBalanceModeSupported(_ whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode) -> Bool
+    func temperatureAndTintValues(for whiteBalanceGains: AVCaptureDevice.WhiteBalanceGains) -> AVCaptureDevice.WhiteBalanceTemperatureAndTintValues
+    func setWhiteBalanceModeLocked(with gains: AVCaptureDevice.WhiteBalanceGains, completionHandler: DeviceCompletionHandler?)
+    func deviceWhiteBalanceGains(for values: AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) -> AVCaptureDevice.WhiteBalanceGains
+
 }
 
 
