@@ -12,20 +12,6 @@
 import AVKit
 
 class MockCaptureDevice: NSObject, CaptureDevice {
-    func isWhiteBalanceModeSupported(_ whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode) -> Bool {
-        true
-    }
-    
-    func setWhiteBalanceModeLocked(with gains: AVCaptureDevice.WhiteBalanceGains, completionHandler: DeviceCompletionHandler?) {
-    }
-    
-    func deviceWhiteBalanceGains(for values: AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) -> AVCaptureDevice.WhiteBalanceGains {
-        .init()
-    }
-    
-    func temperatureAndTintValues(for whiteBalanceGains: AVCaptureDevice.WhiteBalanceGains) -> AVCaptureDevice.WhiteBalanceTemperatureAndTintValues {
-        .init()
-    }
     
     // MARK: Getters
     var uniqueID: String = UUID().uuidString
@@ -51,6 +37,8 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var isAdjustingFocus: Bool { false }
     var isAdjustingWhiteBalance: Bool { false }
     var position: AVCaptureDevice.Position { .back }
+    var deviceWhiteBalanceGains: AVCaptureDevice.WhiteBalanceGains { .init() }
+
 
     // MARK: Setters
     var videoZoomFactor: CGFloat = 1
@@ -74,6 +62,22 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     func setExposureTargetBias(_ bias: Float, completionHandler handler: ((CMTime) -> ())?) {
         _exposureTargetBias = bias
     }
+    
+    func isWhiteBalanceModeSupported(_ whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode) -> Bool {
+        true
+    }
+    
+    func setWhiteBalanceModeLocked(with gains: AVCaptureDevice.WhiteBalanceGains, completionHandler: DeviceCompletionHandler?) {
+    }
+    
+    func deviceWhiteBalanceGains(for values: AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) -> AVCaptureDevice.WhiteBalanceGains {
+        .init()
+    }
+    
+    func temperatureAndTintValues(for whiteBalanceGains: AVCaptureDevice.WhiteBalanceGains) -> AVCaptureDevice.WhiteBalanceTemperatureAndTintValues {
+        .init()
+    }
+
 
     // MARK: Private Attributes
     private var _exposureDuration: CMTime = .init()

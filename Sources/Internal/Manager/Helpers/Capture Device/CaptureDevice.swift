@@ -60,6 +60,7 @@ public protocol CaptureDevice: NSObject {
     func setWhiteBalanceModeLocked(with gains: AVCaptureDevice.WhiteBalanceGains, completionHandler: DeviceCompletionHandler?)
     func deviceWhiteBalanceGains(for values: AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) -> AVCaptureDevice.WhiteBalanceGains
 
+    var deviceWhiteBalanceGains: AVCaptureDevice.WhiteBalanceGains { get }
 }
 
 
