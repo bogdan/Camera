@@ -47,6 +47,7 @@ public protocol CaptureDevice: NSObject {
     var activeVideoMaxFrameDuration: CMTime { get set }
     var exposureMode: AVCaptureDevice.ExposureMode { get set }
     var hdrMode: CameraHDRMode { get set }
+    var whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode { get set }
 
     // MARK: Methods
     func lockForConfiguration() throws

@@ -50,6 +50,7 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var activeVideoMaxFrameDuration: CMTime = .init()
     var exposureMode: AVCaptureDevice.ExposureMode = .continuousAutoExposure
     var hdrMode: CameraHDRMode = .auto
+    var whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode = .continuousAutoWhiteBalance
 
     // MARK: Methods
     func lockForConfiguration() throws { return }
