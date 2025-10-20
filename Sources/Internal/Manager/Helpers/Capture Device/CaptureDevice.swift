@@ -38,6 +38,7 @@ public protocol CaptureDevice: NSObject {
     var isLockingWhiteBalanceWithCustomDeviceGainsSupported: Bool { get }
     var position: AVCaptureDevice.Position { get }
     var maxWhiteBalanceGain: Float { get }
+    var deviceWhiteBalanceGains: AVCaptureDevice.WhiteBalanceGains { get }
 
     // MARK: Getters & Setters
     var videoZoomFactor: CGFloat { get set }
