@@ -35,7 +35,9 @@ public protocol CaptureDevice: NSObject {
     var isAdjustingExposure: Bool { get }
     var isAdjustingFocus: Bool { get }
     var isAdjustingWhiteBalance: Bool { get }
+    var isLockingWhiteBalanceWithCustomDeviceGainsSupported: Bool { get }
     var position: AVCaptureDevice.Position { get }
+    var maxWhiteBalanceGain: Float { get }
 
     // MARK: Getters & Setters
     var videoZoomFactor: CGFloat { get set }
@@ -61,7 +63,6 @@ public protocol CaptureDevice: NSObject {
     func setWhiteBalanceModeLocked(with gains: AVCaptureDevice.WhiteBalanceGains, completionHandler: DeviceCompletionHandler?)
     func deviceWhiteBalanceGains(for values: AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) -> AVCaptureDevice.WhiteBalanceGains
 
-    var deviceWhiteBalanceGains: AVCaptureDevice.WhiteBalanceGains { get }
 }
 
 

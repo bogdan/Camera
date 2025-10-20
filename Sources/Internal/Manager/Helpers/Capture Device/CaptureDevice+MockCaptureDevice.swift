@@ -37,8 +37,8 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var isAdjustingFocus: Bool { false }
     var isAdjustingWhiteBalance: Bool { false }
     var position: AVCaptureDevice.Position { .back }
-    var deviceWhiteBalanceGains: AVCaptureDevice.WhiteBalanceGains { .init() }
-
+    var isLockingWhiteBalanceWithCustomDeviceGainsSupported: Bool { true }
+    var maxWhiteBalanceGain: Float { 1 }
 
     // MARK: Setters
     var videoZoomFactor: CGFloat = 1
@@ -50,6 +50,7 @@ class MockCaptureDevice: NSObject, CaptureDevice {
     var activeVideoMaxFrameDuration: CMTime = .init()
     var exposureMode: AVCaptureDevice.ExposureMode = .continuousAutoExposure
     var hdrMode: CameraHDRMode = .auto
+    var deviceWhiteBalanceGains: AVCaptureDevice.WhiteBalanceGains = .init()
     var whiteBalanceMode: AVCaptureDevice.WhiteBalanceMode = .continuousAutoWhiteBalance
 
     // MARK: Methods
