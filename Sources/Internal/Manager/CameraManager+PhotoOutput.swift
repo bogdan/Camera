@@ -81,13 +81,21 @@ private extension CameraManagerPhotoOutput {
         return settings
     }
     func configureOutput() {
+        print("conf", Date().timeIntervalSinceReferenceDate)
         guard let connection = output.connection(with: .video), connection.isVideoMirroringSupported,
               let parent
         else { return }
+        print("conf", Date().timeIntervalSinceReferenceDate)
 
         connection.isVideoMirrored = parent.attributes.mirrorOutput ? parent.attributes.cameraPosition != .front : parent.attributes.cameraPosition == .front
+        print("conf", Date().timeIntervalSinceReferenceDate)
+
         connection.videoOrientation = parent.attributes.deviceOrientation
+        print("conf", Date().timeIntervalSinceReferenceDate)
+
         parent.attributes.configureOutput?(output)
+        print("conf", Date().timeIntervalSinceReferenceDate)
+
     }
 }
 
