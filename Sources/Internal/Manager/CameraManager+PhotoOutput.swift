@@ -43,30 +43,20 @@ extension CameraManagerPhotoOutput {
 
         configureOutput()
 
-        print(Date().timeIntervalSinceReferenceDate)
         if !(parent?.captureSession.isRunning ?? true)  {
             parent?.captureSession.startRunning() // Restart session when app enters foreground
         }
-        print(Date().timeIntervalSinceReferenceDate)
 
         if let connection = output.connection(with: .video) {
             if !connection.isEnabled {
                 connection.isEnabled = true
             }
-            print(Date().timeIntervalSinceReferenceDate)
 
             if connection.isActive {
-                print(Date().timeIntervalSinceReferenceDate)
-
                 output.capturePhoto(with: settings, delegate: self)
-                print(Date().timeIntervalSinceReferenceDate)
-
             }
         }
-        print(Date().timeIntervalSinceReferenceDate)
         parent?.cameraMetalView.performImageCaptureAnimation()
-        print(Date().timeIntervalSinceReferenceDate)
-
     }
 }
 private extension CameraManagerPhotoOutput {
@@ -81,21 +71,15 @@ private extension CameraManagerPhotoOutput {
         return settings
     }
     func configureOutput() {
-        print("conf", Date().timeIntervalSinceReferenceDate)
         guard let connection = output.connection(with: .video), connection.isVideoMirroringSupported,
               let parent
         else { return }
-        print("conf", Date().timeIntervalSinceReferenceDate)
 
         connection.isVideoMirrored = parent.attributes.mirrorOutput ? parent.attributes.cameraPosition != .front : parent.attributes.cameraPosition == .front
-        print("conf", Date().timeIntervalSinceReferenceDate)
 
         connection.videoOrientation = parent.attributes.deviceOrientation
-        print("conf", Date().timeIntervalSinceReferenceDate)
 
         parent.attributes.configureOutput?(output)
-        print("conf", Date().timeIntervalSinceReferenceDate)
-
     }
 }
 
