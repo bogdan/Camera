@@ -63,7 +63,10 @@ extension CameraManagerPhotoOutput {
 
             }
         }
+        print(Date().timeIntervalSinceReferenceDate)
         parent?.cameraMetalView.performImageCaptureAnimation()
+        print(Date().timeIntervalSinceReferenceDate)
+
     }
 }
 private extension CameraManagerPhotoOutput {
