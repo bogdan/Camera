@@ -27,9 +27,6 @@ import CoreServices
 extension CameraManagerPhotoOutput {
     func setup(parent: CameraManager) throws(MCameraError) {
         self.parent = parent
-        output.setPreparedPhotoSettingsArray([
-            getPhotoOutputSettings()
-        ])
         try parent.captureSession.add(output: output)
     }
 }
@@ -41,11 +38,10 @@ extension CameraManagerPhotoOutput {
 
 // MARK: Capture
 extension CameraManagerPhotoOutput {
-    func capture(callback: CaptureOutputCallback = { _, _ in }) {
-        let settings = getPhotoOutputSettings()
+    func capture(settings: AVCapturePhotoSettings? = nil) {
+        let settings = settings ?? getPhotoOutputSettings()
 
         configureOutput()
-        callback(settings, output)
 
         if !(parent?.captureSession.isRunning ?? true)  {
             parent?.captureSession.startRunning() // Restart session when app enters foreground
