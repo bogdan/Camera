@@ -27,6 +27,9 @@ import CoreServices
 extension CameraManagerPhotoOutput {
     func setup(parent: CameraManager) throws(MCameraError) {
         self.parent = parent
+        output.setPreparedPhotoSettingsArray([
+            getPhotoOutputSettings()
+        ])
         try parent.captureSession.add(output: output)
     }
 }
