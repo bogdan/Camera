@@ -224,6 +224,7 @@ public extension MCameraScreen {
     var isGridVisible: Bool { cameraManager.attributes.isGridVisible }
     
     var device: CaptureDevice? { cameraManager.getCameraInput()?.device }
+    var photoOutput: AVCapturePhotoOutput { cameraManager.photoOutput.output }
     var frontDevice: CaptureDevice? { cameraManager.frontCameraInput?.device }
     var backDevice: CaptureDevice? { cameraManager.backCameraInput?.device }
 
